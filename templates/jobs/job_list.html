@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h2>Available Job Openings</h2>
+    </div>
+    <div class="col-md-4 text-end">
+        {% if user.user_type == 'recruiter' %}
+            <a href="{% url 'post_job' %}" class="btn btn-success">+ Post a New Job</a>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Search Bar for Job Seekers -->
+<form method="GET" action="{% url 'job_list' %}" class="input-group mb-4">
+    <input type="text" name="q" class="form-control" placeholder="Search by title, category, or skills (e.g., Python)..." value="{{ query }}">
+    <button class="btn btn-outline-primary" type="submit">Search</button>
+</form>
+
+<div class="row">
+    {% for job in jobs %}
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ job.title }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ job.recruiter.recruiter_profile.company_name|default:"Company" }}</h6>
+                    <p class="card-text"><strong>Category:</strong> {{ job.category }}</p>
+                    <p class="card-text">{{ job.job_description|truncatechars:100 }}</p>
+                    <p class="card-text"><small class="text-muted"><strong>Required Skills:</strong> {{ job.skills_set }}</small></p>
+                    
+                    {% if user.user_type == 'jobseeker' %}
+                        <a href="{% url 'apply_job' job.id %}" class="btn btn-primary btn-sm w-100">Apply Now</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="col-12">
+            <div class="alert alert-warning text-center">No jobs found matching your criteria.</div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

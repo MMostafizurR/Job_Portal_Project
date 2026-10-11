@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h3 class="card-title text-center mb-4">Complete Your Profile</h3>
+                <!-- enctype="multipart/form-data" is vital for handling file uploads like resumes -->
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    {{ form.as_p }}
+                    
+                    <button type="submit" class="btn btn-dark w-100 mt-3">Save Profile</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
