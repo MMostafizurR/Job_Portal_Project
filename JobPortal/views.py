@@ -4,6 +4,7 @@ from django.db.models import Q
 from JobPortal.models import Job, JobApplication
 from JobPortal.forms import JobPostForm
 
+
 # Create your views here.
 @login_required
 def job_list_view(request):
