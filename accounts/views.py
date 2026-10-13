@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 
 from accounts.forms import UserRegistrationForm, RecruiterProfileForm, JobSeekerProfileForm
 
+
 # Create your views here.
 
 def register(request):
